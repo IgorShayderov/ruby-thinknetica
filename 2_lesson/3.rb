@@ -1,16 +1,14 @@
 fibonacci_numbers = []
-previous_number = 0
-sum = 1
+previous_number = 1
+next_number = 1
 
-(1..100).each do {|number|
+(1..100).each do |number|
 
-if number == sum
-  sum = previous_number + number
+  if number == next_number
+    next_number = previous_number + number
+    previous_number = number
+    fibonacci_numbers.push(next_number);
+  end
 end
 
-
-
-
-0 + 1 = 1
-1 + 1 = 2
-2 + 1 = 
+puts fibonacci_numbers
