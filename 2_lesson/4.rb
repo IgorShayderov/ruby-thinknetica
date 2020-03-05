@@ -1,17 +1,7 @@
 vowels = {}
 
-("a".."z").each.with_index(1){|letter, index|
-  if letter == "a"
-    vowels[letter] = index
-  elsif letter == "e"
-    vowels[letter] = index
-  elsif letter == "i"
-    vowels[letter] = index
-  elsif letter == "o"
-    vowels[letter] = index
-  elsif letter == "u"
-    vowels[letter] = index
-  end
-}
+("a".."z").each.with_index(1) do |letter, index|
+vowels[letter] = index if 'aeiou'.include?(letter)
+end
 
 puts vowels
