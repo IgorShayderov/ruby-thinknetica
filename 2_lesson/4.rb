@@ -1,17 +1,17 @@
-letters = {}
+vowels = {}
 
-("a".."z").each{|letter|
+("a".."z").each.with_index(1){|letter, index|
   if letter == "a"
-    letters[letter] = 1
+    vowels[letter] = index
   elsif letter == "e"
-    letters[letter] = 5
+    vowels[letter] = index
   elsif letter == "i"
-    letters[letter] = 9
+    vowels[letter] = index
   elsif letter == "o"
-    letters[letter] = 15
+    vowels[letter] = index
   elsif letter == "u"
-    letters[letter] = 21
+    vowels[letter] = index
   end
 }
 
-puts letters
+puts vowels

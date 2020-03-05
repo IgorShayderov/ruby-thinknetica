@@ -1,7 +1,7 @@
 products = {}
+total_price = 0
 
 loop do
-  total_price = 0
 
   puts "Please, print name of a product (print 'stop' to stop)."
   product = gets.chomp
@@ -18,15 +18,15 @@ loop do
     price: price,
     amount: amount,
   }
+end
 
   puts products
 
-  products.each{ |product, value|
+  products.each do |product, value|
     product_total_price = value[:price] * value[:amount]
     puts "#{product} has total price #{product_total_price}"
     total_price += product_total_price
-  }
+  end
 
   puts "Total price is #{total_price}"
 
-end

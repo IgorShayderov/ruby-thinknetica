@@ -14,7 +14,5 @@ months = {
 }
 
 for month, days_count in months
-  if days_count == 30
-    puts "#{month.capitalize}"
-  end
+  puts month.capitalize if days_count == 30
 end
