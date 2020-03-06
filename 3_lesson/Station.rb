@@ -1,22 +1,33 @@
-class Station(name)
-  def initialize
+class Station
+  def initialize(name)
     @name = name
-    @trainInside = []
+    @trains_inside = []
   end
 
-  def takeTrainIn(train)
-    @trainInside.push(train)
+  def take_train_in(train)
+    @trains_inside.push(train)
   end
 
-  def trainsList(type = 'all')
-    if type != all
-      @trainsInside.each{ |train| puts "#{train.type} train: #{train.name}." if train.type == type }
+  def trains_list
+    @trains_inside.each{ |train| puts "#{train.type} train: #{train.number}." }
+  end
+
+  def train_list_by_type(type)
+    picked_trains = @trains_inside.select{ |train| train.type == type }
+    if picked_trains.length > 0
+      puts "#{type} trains"
+      picked_trains.each{ |train| puts "Train: #{train.number}"}
     else
-      @trainsInside.each{ |train| puts "#{train.type} train: #{train.name}." }
+      puts "There are no such trains on a station"
     end
   end
 
-  def trainListByType
-    trainsList('')
+  def dispatch_train(train_to_delete)
+    @trains_inside.each do |train|
+      if train.number == train_to_delete.number
+        @trains_inside.delete(train)
+        break
+      end
+    end
   end
 end
