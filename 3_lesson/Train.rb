@@ -1,9 +1,6 @@
-# Может перемещаться между станциями, указанными в маршруте. Перемещение возможно вперед и назад, но только на 1 станцию за раз.
-# Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
-
 class Train
   attr_accessor :speed
-  attr_reader :type, :number
+  attr_reader :type, :number, :carriage_count, :station
 
   def initialize(number, type, carriage_count)
     @number = number
@@ -18,12 +15,12 @@ class Train
     @speed = 0
   end
 
-  def carriage_count
-    @carriage_count
+  def get_current_station
+    puts "Current station is #{station.name}"
   end
 
   def carriage_action(action)
-    if speed > 0
+    if speed == 0
       if action == 'add'
         @carriage_count += 1
         puts "Carriage added."
@@ -36,20 +33,54 @@ class Train
     end
   end
 
-  def set_route=(route)
+  def set_route(route)
       @route = route
       @station = route.start_station
   end
 
-  def next_station
-    if @station == @route.start_station
-      @station = @route.intermediate_stations.length == 0 ? @route.end_station : @route.intermediate_stations[0]
-    elsif @station == @route.end_station
+  def get_following_station
+    following_station = next_station
+    puts following_station == @station ? "There is no following station" : following_station.name
+  end
+
+  def get_previous_station
+    previous_station = next_station("previous")
+    puts previous_station == @station ? "There is no previous station." : previous_station.name
+  end
+
+  def move_to_following_station
+    following_station = self.next_station()
+    if following_station === @station
       puts "You can't go furter than end station."
-    else
-      current_station_index = @route.intermediate_stations.index(@station)
-      @station = @route.intermediate_stations.length > current_station_index ? @route.intermediate_stations[current_station_index + 1] : @route.end_station
+    else @station = following_station
     end
   end
-end
 
+  def move_to_previous_station
+    previous_station = self.next_station("previous")
+    if previous_station === @station
+      puts "You can't go furter than start station."
+    else @station = previous_station
+    end
+  end
+
+  def next_station(direction="following")
+    options = {
+      start_point: direction == "previous" ? @route.end_station : @route.start_station,
+      end_point: direction == "previous" ? @route.start_station : @route.end_station,
+      action: direction == "previous" ? -1 : 1,
+    }
+
+    if @station == options[:start_point]
+      return @route.intermediate_stations.length == 0 ? options[:end_point] : @route.intermediate_stations[0]
+    elsif @station == options[:end_point]
+      return @station
+    else
+      current_station_index = @route.intermediate_stations.index(@station)
+      return @route.intermediate_stations.length > current_station_index ?
+        @route.intermediate_stations[current_station_index + options[:action]]
+        : options[:end_point]
+    end
+  end
+
+end

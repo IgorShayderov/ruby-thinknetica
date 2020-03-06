@@ -1,4 +1,6 @@
 class Route
+  attr_reader :start_station, :end_station, :intermediate_stations
+
   def initialize(start_station, end_station)
     @start_station = start_station
     @end_station = end_station
@@ -9,9 +11,9 @@ class Route
     @intermediate_stations.push(station)
   end
 
-  def delete_station(station_name)
+  def remove_station(station_to_delete)
     @intermediate_stations.each do |station|
-      if station.name == station_name
+      if station == station_to_delete
         @intermediate_stations.delete(station)
         break
       end
@@ -19,8 +21,7 @@ class Route
   end
 
   def stations_list
-    all_stations = @intermediate_stations
-    all_stations.push(@start_station, @end_station)
+    all_stations = [@start_station, @end_station].concat(@intermediate_stations)
     all_stations.each{ |station| puts "Station: #{station.name}." }
   end
 end
