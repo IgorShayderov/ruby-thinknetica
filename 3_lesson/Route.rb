@@ -21,7 +21,7 @@ class Route
   end
 
   def stations_list
-    all_stations = [@start_station, @end_station].concat(@intermediate_stations)
+    all_stations = [@start_station].concat(@intermediate_stations).push(@end_station)
     all_stations.each{ |station| puts "Station: #{station.name}." }
   end
 end
