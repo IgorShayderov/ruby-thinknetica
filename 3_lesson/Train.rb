@@ -7,8 +7,6 @@ class Train
     @type = type
     @carriage_count = carriage_count
     @speed = 0
-    @route
-    @station
   end
 
   def stop_train
@@ -19,15 +17,19 @@ class Train
     puts "Current station is #{station.name}"
   end
 
-  def carriage_action(action)
+  def add_carriage
     if speed == 0
-      if action == 'add'
-        @carriage_count += 1
-        puts "Carriage added."
-      elsif action == 'remove'
-        @carriage_count -= 1
-        puts "Carriage removed."
-      end
+      @carriage_count += 1
+      puts "Carriage added."
+    else
+      puts "You should stop to add carriage."
+    end
+  end
+
+  def remove_carriage
+        if speed == 0
+      @carriage_count -= 1
+      puts "Carriage removed."
     else
       puts "You should stop to add carriage."
     end

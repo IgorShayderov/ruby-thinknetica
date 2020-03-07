@@ -26,7 +26,7 @@ class Station
 
   def dispatch_train(train_to_delete)
     @trains_inside.each do |train|
-      if train.number == train_to_delete.number
+      if train == train_to_delete
         @trains_inside.delete(train)
         break
       end

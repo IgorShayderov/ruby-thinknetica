@@ -26,12 +26,12 @@ route1.remove_station(station3)
 route1.stations_list
 
 puts train1.speed
-train1.carriage_action("add")
+train1.add_carriage
 train1.speed = 50
 puts train1.speed
-train1.carriage_action("remove")
+train1.add_carriage
 train1.stop_train
-train1.carriage_action("add")
+train1.remove_carriage
 
 train1.set_route(route1)
 
