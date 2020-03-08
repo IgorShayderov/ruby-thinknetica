@@ -1,6 +1,6 @@
 class Train
   attr_accessor :speed
-  attr_reader :type, :number, :carriage_count, :station
+  attr_reader :type, :number, :carriage_count, :station, :route
 
   def initialize(number, type, carriage_count)
     @number = number
@@ -65,6 +65,8 @@ class Train
     else @station = previous_station
     end
   end
+
+  private
 
   def next_station(direction="following")
     options = {

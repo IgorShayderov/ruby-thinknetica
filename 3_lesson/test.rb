@@ -1,8 +1,8 @@
-require_relative 'Train'
-require_relative 'Route'
-require_relative 'Station'
+require_relative 'train'
+require_relative 'route'
+require_relative 'station'
 
-train1 = Train.new(666, "carriage", 5)
+train1 = Train.new(666, "passenger", 5)
 train2 = Train.new(333, "cargo", 1)
 train3 = Train.new(999, "cargo", 3)
 
@@ -15,9 +15,9 @@ route1 = Route.new(station1, station2)
 station1.take_train_in(train1)
 station1.take_train_in(train2)
 station1.take_train_in(train3)
-station1.trains_list
+puts station1.trains_inside
 station1.dispatch_train(train3)
-station1.train_list_by_type("cargo")
+puts station1.trains_inside_by_type()
 
 route1.add_station(station3)
 route1.stations_list

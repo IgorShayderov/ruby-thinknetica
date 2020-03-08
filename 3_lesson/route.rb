@@ -11,13 +11,8 @@ class Route
     @intermediate_stations.push(station)
   end
 
-  def remove_station(station_to_delete)
-    @intermediate_stations.each do |station|
-      if station == station_to_delete
-        @intermediate_stations.delete(station)
-        break
-      end
-    end
+  def remove_station(station)
+    @intermediate_stations.delete(station)
   end
 
   def stations_list
