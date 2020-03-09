@@ -42,3 +42,9 @@ train1.move_to_following_station
 train1.get_current_station
 train1.move_to_previous_station
 train1.get_current_station
+
+puts "-----------------"
+train1.get_current_station
+train1.get_following_station
+train1.move_to_following_station
+train1.get_current_station
