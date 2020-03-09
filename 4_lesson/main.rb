@@ -7,20 +7,6 @@ require_relative 'carriage'
 require_relative 'cargo_carriage'
 require_relative 'passenger_carriage'
 
-def check_for_existance(instances)
-# рефакторинг повторяющихся return'ов
-  case instances
-  when instances.has_key?(:route)
-    return puts "Can't find route #{route} in the routes list." if !routes.has_key?(instances[:route])
-  when instances.has_key?(:station)
-    return puts "Can't find station #{station} in the stations list." if !stations.has_key?(instances[:station])
-  when instances.has_key?(:train)
-    return puts "Can't find train #{train} in the trains list." if !trains.has_key?(instances[:train])
-  when instances.has_key?(:carriage)
-    return puts "Can't find carriage #{carriage} in the carriages list." if !carriages.has_key?(instances[:carriage])
-  end
-end
-
 stations = {}
 trains = {}
 routes = {}
@@ -101,11 +87,9 @@ loop do
     route = objects[0]
     station = objects[1]
 
-    check_for_existance({
-      route: route,
-      station: station,
-    })
-    return puts "Route #{route} already have #{station} station." if routes[route].station_list.include?(stations[station])
+    return puts "Can't find station #{station} in the stations list." if !stations.has_key?(station)
+    return puts "Can't find route #{route} in the routes list." if !routes.has_key?(route)
+    return puts "Route #{route} already have #{station} station." if routes[route].stations_list.include?(stations[station])
 
     routes[route].add_station(stations[station])
     puts "Station #{station} has been added to route #{route}."
@@ -114,23 +98,19 @@ loop do
     route = objects[0]
     station = objects[1]
 
-    check_for_existance({
-      route: route,
-      station: station,
-    })
-    return puts "You don't have #{station} on a #{route} route." if !routes[route].station_list.include?(stations[station])
+    return puts "Can't find station #{station} in the station list." if !stations.has_key?(station)
+    return puts "Can't find route #{route} in the routes list." if !routes.has_key?(route)
+    return puts "You don't have #{station} on a #{route} route." if !routes[route].stations_list.include?(stations[station])
 
-    routes[route].remove_station(station)
+    routes[route].remove_station(stations[station])
     puts "Station #{station} has been removed from route #{route}."
   when /-\w+\s+set\s+-\w+/
     objects = input.scan(/(?<=-)\w+/)
     train = objects[0]
     route = objects[1]
 
-    check_for_existance({
-      route: route,
-      train: train,
-    })
+    return puts "Can't find train #{train} in the trains list." if !trains.has_key?(train)
+    return puts "Can't find route #{route} in the routes list." if !routes.has_key?(route)
 
     trains[train].set_route(route)
     puts "Route #{route} has been set to train #{train}."
@@ -139,10 +119,8 @@ loop do
     train = objects[0]
     carriage = objects[1]
 
-    check_for_existance({
-      train: train,
-      carriage: carriage,
-    })
+    return puts "Can't find train #{train} in the trains list." if !trains.has_key?(train)
+    return puts "Can't find carriage #{carriage} in the carriages list." if !carriages.has_key?(carriage)
     return puts "You already have #{carriage} carriage." if trains[train].carriages.include?(carriages[carriage])
 
     trains[train].add_carriage(carriage)
@@ -151,35 +129,33 @@ loop do
     train = objects[0]
     carriage = objects[1]
 
-    check_for_existance({
-      train: train,
-      carriage: carriage,
-    })
+    return puts "Can't find train #{train} in the trains list." if !trains.has_key?(train)
+    return puts "Can't find carriage #{carriage} in the carriages list." if !carriages.has_key?(carriage)
     return puts "You don't have #{carriage} carriage." if !trains[train].carriages.include?(carriages[carriage])
 
     trains[train].remove_carriage(carriage)
   when /-\w+\s+next station/
     train = /(?<=-)\w+/.match(input).to_s
 
-    check_for_existance({ train: train })
+    return puts "Can't find train #{train} in the trains list." if !trains.has_key?(train)
 
     trains[train].next_station
   when /-\w+\s+previous station/
     train = /(?<=-)\w+/.match(input).to_s
 
-    check_for_existance({ train: train })
+    return puts "Can't find train #{train} in the trains list." if !trains.has_key?(train)
 
     trains[train].previous_station
   when /-\w+\s+station list/
     route = /(?<=-)\w+/.match(input).to_s
 
-    check_for_existance({ route: route })
+    return puts "Can't find route #{route} in the routes list." if !routes.has_key?(route)
 
     routes[route].station_list
   when /-\w+\s+train list/
     station = /(?<=-)\w+/.match(input).to_s
 
-    check_for_existance({ station: station })
+    return puts "Can't find station #{station} in the stations list." if !stations.has_key?(station)
 
     stations[station].trains_inside
   when /instances\s+-\w+/
