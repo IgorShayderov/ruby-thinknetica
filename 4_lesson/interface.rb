@@ -16,27 +16,27 @@ class Interface
       when "help"
         commands_list
       when /create\s-+\w+\s+\(.+\)/
-        create_object(input)
+        redo if !create_object(input)
       when /-\w+\s+add\sstation\s+-\w+/
-        add_station(input)
+        redo if !add_station(input)
       when /-\w+\s+remove\sstation\s+-\w+/
-        remove_station(input)
+        redo if !remove_station(input)
       when /-\w+\s+set\s+-\w+/
-        set_route(input)
+        redo if !set_route(input)
       when /-\w+\s+add\s+-\w+/
-        add_carriage(input)
+        redo if !add_carriage(input)
       when /-\w+\sremove\s+-\w+/
-        remove_carriage(input)
+        redo if !remove_carriage(input)
       when /-\w+\s+next station/
-        next_station(input)
+        redo if !next_station(input)
       when /-\w+\s+previous station/
-        previous_station(input)
+        redo if !previous_station(input)
       when /-\w+\s+station list/
-        station_list(input)
+        redo if !station_list(input)
       when /-\w+\s+train list/
-        train_list(input)
+        redo if !train_list(input)
       when /instances\s+-\w+/
-        show_instances(input)
+        redo if !show_instances(input)
       when "exit"
         puts "Goodbye."
         break
@@ -45,33 +45,38 @@ class Interface
       end
     end
   end
-
+# Методы должны быть использованы через интерфейс, но не непосредственно пользователем
   private
 
-  def check_for_existance(instances)
-    if instances.has_key?(:route)
-      return puts "Can't find route #{instaces[:route]} in the routes list." if !@routes.has_key?(instances[:route])
+  def exists?(instances)
+    if instances.has_key?(:route) && !@routes.has_key?(instances[:route])
+      puts "Can't find route #{instances[:route]} in the routes list."
+      return false
     end
-    if instances.has_key?(:station)
-      return puts "Can't find station #{instaces[:station]} in the stations list." if !@stations.has_key?(instances[:station])
+    if instances.has_key?(:station) && !@stations.has_key?(instances[:station])
+      puts "Can't find station #{instances[:station]} in the stations list."
+      return false
     end
-    if instances.has_key?(:train)
-      return puts "Can't find train #{instaces[:train]} in the trains list." if !@trains.has_key?(instances[:train])
+    if instances.has_key?(:train) && !@trains.has_key?(instances[:train])
+      puts "Can't find train #{instances[:train]} in the trains list."
+      return false
     end
-    if instances.has_key?(:carriage)
-      return puts "Can't find carriage #{instaces[:carriage]} in the carriages list." if !@carriages.has_key?(instances[:carriage])
+    if instances.has_key?(:carriage) && !@carriages.has_key?(instances[:carriage])
+      puts "Can't find carriage #{instances[:carriage]} in the carriages list."
+      return false
     end
+    true
   end
 
   def commands_list
     puts "---------------------------------------------------------------------"
-    puts "Avaliable commands:"
+    puts " * Avaliable commands:"
     puts "create -object (arg1, arg2)     | Creates new object."
-    puts "Avaliable objects: station, train, route."
-    puts "Train have (number) and (type) arguments."
-    puts "Station have (name) argument."
-    puts "Route have (start_station) and (end_station) arguments."
-    puts "Arguments must be in parentheses."
+    puts " * Avaliable objects: station, train, route."
+    puts " * Train have (number) and (type) arguments. Type can be cargo or passenger."
+    puts " * Station have (name) argument."
+    puts " * Route have (start_station) and (end_station) arguments."
+    puts " * Arguments must be in parentheses."
     puts "-route add station -station    | Adding station to the route."
     puts "-route remove station -station | Removing station from the route."
     puts "-train set -route              | Setting route to the train."
@@ -82,7 +87,7 @@ class Interface
     puts "-route station list            | List of all stations on the route."
     puts "-station train list            | List of all trains on the station."
     puts "instances -object              | List of all, created by you, objects."
-    puts "Avaliable objects: stations, trains, routes."
+    puts " * Avaliable objects: stations, trains, routes."
     puts "exit                           | Exit from program."
   end
 
@@ -109,6 +114,8 @@ class Interface
       start_station = stations[arguments[0]]
       end_station = stations[arguments[1]]
 
+      [start_station, end_station].each{ |station| exists?({station: station}) }
+
       @routes[name] = Route.new(start_station, end_station)
       puts "Route #{name} has been created."
     end
@@ -119,7 +126,7 @@ class Interface
     route = objects[0]
     station = objects[1]
 
-    check_for_existance({
+    return false if !exists?({
       route: route,
       station: station,
     })
@@ -134,7 +141,7 @@ class Interface
     route = objects[0]
     station = objects[1]
 
-    check_for_existance({
+    return false if !exists?({
       route: route,
       station: station,
     })
@@ -149,7 +156,7 @@ class Interface
     train = objects[0]
     route = objects[1]
 
-    check_for_existance({
+    return false if !exists?({
       route: route,
       train: train,
     })
@@ -163,7 +170,7 @@ class Interface
     train = objects[0]
     carriage = objects[1]
 
-    check_for_existance({
+    return false if !exists?({
       carriage: carriage,
       train: train,
     })
@@ -178,7 +185,7 @@ class Interface
     train = objects[0]
     carriage = objects[1]
 
-    check_for_existance({
+    return false if !exists?({
       carriage: carriage,
       train: train,
     })
@@ -190,7 +197,7 @@ class Interface
   def next_station(input)
     train = /(?<=-)\w+/.match(input).to_s
 
-    check_for_existance({train: train})
+    return false if !exists?({train: train})
 
     @trains[train].next_station
   end
@@ -198,7 +205,7 @@ class Interface
   def previous_station(input)
     train = /(?<=-)\w+/.match(input).to_s
 
-    check_for_existance({train: train})
+    return false if !exists?({train: train})
 
     @trains[train].previous_station
   end
@@ -206,7 +213,7 @@ class Interface
   def station_list(input)
     route = /(?<=-)\w+/.match(input).to_s
 
-    check_for_existance({route: route})
+    return false if !exists?({route: route})
 
     @routes[route].station_list
   end
@@ -214,7 +221,7 @@ class Interface
   def train_list(input)
     station = /(?<=-)\w+/.match(input).to_s
 
-        check_for_existance({station: station})
+    return false if !exists?({station: station})
 
     @stations[station].trains_inside
   end
