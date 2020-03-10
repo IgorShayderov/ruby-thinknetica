@@ -16,6 +16,24 @@ class Train
     @speed = 0
   end
 
+    def add_carriage(carriage)
+    if speed > 0
+      puts "You should stop to add carriage."
+    else
+      @carriages.push(carriage)
+      puts "Carriage added."
+    end
+  end
+
+  def remove_carriage(carriage)
+    if speed > 0
+      puts "You should stop to remove carriage."
+    else 
+      @carriages.delete(carriage)
+      puts "Carriage removed."
+    end
+  end
+
   def get_current_station
     puts "Current station is #{station.name}"
   end

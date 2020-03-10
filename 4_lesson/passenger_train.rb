@@ -5,22 +5,10 @@ class PassengerTrain < Train
   end
 
   def add_carriage(carriage)
-    if speed > 0
-      puts "You should stop to add carriage."
-    elsif carriage.type != "passenger"
+    if carriage.type != "passenger"
       puts "Wrong type of carriage."
-    else 
-      @carriages.push(carriage)
-      puts "Carriage added."
-    end
-  end
-
-  def remove_carriage(carriage)
-    if speed > 0
-      puts "You should stop to remove carriage."
-    else 
-      @carriages.delete(carriage)
-      puts "Carriage removed."
+    else
+      super(carriage)
     end
   end
 
