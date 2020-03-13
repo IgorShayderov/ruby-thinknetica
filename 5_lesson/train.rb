@@ -6,12 +6,11 @@ class Train
   inheritable_attributes :instance_counter
   @instance_counter = 0
 
-  @@trains = []
+  @@trains = {}
 
   class << self
     def find(number)
-      @@trains.each { |train| return train if train.number == number}
-      nil
+      @@trains[number] || nil
     end
   end
 
@@ -21,7 +20,7 @@ class Train
     @type = type
     @carriages = []
     @speed = 0
-    @@trains << self
+    @@trains[self.number] = self
   end
 
   def begin_movement

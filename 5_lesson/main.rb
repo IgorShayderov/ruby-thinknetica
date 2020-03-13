@@ -10,11 +10,4 @@ require_relative 'cargo_carriage'
 require_relative 'passenger_carriage'
 require_relative 'interface'
 
-CargoTrain.new(666)
-PassengerTrain.new(333)
-PassengerTrain.new(999)
-
-p CargoTrain.instance_counter
-p PassengerTrain.instance_counter
-
 Interface.new.start
