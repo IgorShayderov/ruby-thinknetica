@@ -72,10 +72,11 @@ class Interface
     puts "---------------------------------------------------------------------"
     puts " * Avaliable commands:"
     puts "create -object (arg1, arg2)     | Creates new object."
-    puts " * Avaliable objects: station, train, route."
+    puts " * Avaliable objects: station, train, route, carriage."
     puts " * Train have (number) and (type) arguments. Type can be cargo or passenger."
     puts " * Station have (name) argument."
     puts " * Route have (start_station) and (end_station) arguments."
+    puts " * Carriage have (type) argument."
     puts " * Arguments must be in parentheses."
     puts "-route add station -station    | Adding station to the route."
     puts "-route remove station -station | Removing station from the route."
@@ -87,7 +88,7 @@ class Interface
     puts "-route station list            | List of all stations on the route."
     puts "-station train list            | List of all trains on the station."
     puts "instances -object              | List of all, created by you, objects."
-    puts " * Avaliable objects: stations, trains, routes."
+    puts " * Avaliable objects: stations, trains, routes, carriages."
     puts "exit                           | Exit from program."
   end
 
@@ -103,7 +104,15 @@ class Interface
       train_number = arguments[0]
       train_type = arguments[1]
 
-      @trains[name] = train_type == "cargo" ? CargoTrain.new(train_number) : PassengerTrain.new(train_number)
+      if train_type == "cargo"
+        @trains[name] = CargoTrain.new(train_number)
+      elsif train_type == "passenger"
+        @trains[name] = PassengerTrain.new(train_number)
+      else
+        puts "Wrong type of train. Must be cargo of passenger."
+        return false
+      end
+
       puts "Train #{name} has been created."
     when "station"
       station_name = arguments[0]
@@ -118,6 +127,19 @@ class Interface
 
       @routes[name] = Route.new(start_station, end_station)
       puts "Route #{name} has been created."
+    when "carriage"
+      carriage_type = arguments[0]
+
+      if train_type == "cargo"
+        @trains[name] = CargoCarriage.new(train_number)
+      elsif train_type == "passenger"
+        @trains[name] = PassengerCarriage.new(train_number)
+      else
+        puts "Wrong type of carriage. Must be cargo of passenger."
+        return false
+      end
+
+      puts "Carriage #{name} has been created."
     end
   rescue
   end
