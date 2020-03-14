@@ -4,6 +4,8 @@ class Train
   include InstanceCounter
   include Validation
 
+  PATTERN = /\w{3}-*\w{2}/
+
   inheritable_attributes :instance_counter
   @instance_counter = 0
 
@@ -26,7 +28,6 @@ class Train
   end
 
   def validate!
-      PATTERN = /\w{3}-*\w{2}/
       raise ArgumentError, "Wrong number for train. Number should consist of 3 letters/digits then optional '-' and then 2 more letters/digits." if !(number =~ PATTERN)
   end
 

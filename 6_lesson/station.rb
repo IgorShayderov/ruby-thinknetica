@@ -2,6 +2,8 @@ class Station
   include InstanceCounter
   include Validation
 
+    PATTERN = /\w+\s*\w+/
+
   attr_reader :name, :trains_inside
 
   @@stations_count = 0
@@ -20,8 +22,7 @@ class Station
   end
 
   def validate!
-    pattern = /\w+\s*\w+/
-    raise ArgumentError, "Wrong name for station." if !(name =~ pattern)
+    raise ArgumentError, "Wrong name for station." if !(name =~ PATTERN)
   end
 
   def take_train_in(train)
