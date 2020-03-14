@@ -1,3 +1,6 @@
+require './modules/module_manufacturer'
+require './modules/module_instance_counter'
+require './modules/module_validation'
 require_relative 'route'
 require_relative 'station'
 require_relative 'train'
@@ -8,6 +11,7 @@ require_relative 'cargo_carriage'
 require_relative 'passenger_carriage'
 require_relative 'interface'
 
+require 'minitest/spec'
 require 'minitest/autorun'
 
 describe Route do
@@ -24,7 +28,7 @@ describe Route do
       @route.add_station(@station3)
     end
     it "should have station in intermediate_stations attribute." do
-      @route.intermediate_stations.must_include(@station3)
+      _(@route.intermediate_stations).must_include(@station3)
     end
   end
 
@@ -36,7 +40,7 @@ describe Route do
       @route.remove_station(@station3)
     end
     it "should remove station from intermediate_stations attribute." do
-      @route.intermediate_stations.must_be_empty
+      _(@route.intermediate_stations).must_be_empty
     end
   end
 

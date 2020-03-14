@@ -26,8 +26,8 @@ class Train
   end
 
   def validate!
-      pattern = /\w{3}-*\w{2}/
-      raise ArgumentError, "Wrong number for train. Number should consist of 3 letters/digits then optional '-' and then 2 more letters/digits." if !(number =~ pattern)
+      PATTERN = /\w{3}-*\w{2}/
+      raise ArgumentError, "Wrong number for train. Number should consist of 3 letters/digits then optional '-' and then 2 more letters/digits." if !(number =~ PATTERN)
   end
 
   def begin_movement

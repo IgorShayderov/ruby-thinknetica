@@ -20,8 +20,8 @@ class Station
   end
 
   def validate!
-      pattern = /\w{3-15}/
-      raise ArgumentError, "Wrong name for station. Name should consist of minimum 3 letters up to 15 letters." if !(number =~ pattern)
+    pattern = /\w+\s*\w+/
+    raise ArgumentError, "Wrong name for station." if !(name =~ pattern)
   end
 
   def take_train_in(train)
