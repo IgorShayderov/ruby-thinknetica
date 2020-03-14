@@ -2,7 +2,6 @@ class Train
   attr_reader :type, :number, :carriages, :station, :route, :cariages, :speed
   include Manufacturer
   include InstanceCounter
-  include Validation
 
   PATTERN = /\w{3}-*\w{2}/
 
@@ -19,7 +18,7 @@ class Train
 
   def initialize(number, type)
     @number = number
-    raise if !valid?
+    validate!
     @type = type
     @carriages = []
     @speed = 0

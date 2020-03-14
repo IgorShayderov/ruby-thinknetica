@@ -1,6 +1,5 @@
 class Station
   include InstanceCounter
-  include Validation
 
     PATTERN = /\w+\s*\w+/
 
@@ -16,7 +15,7 @@ class Station
 
   def initialize(name)
     @name = name
-    raise if !valid?
+    validate!
     @trains_inside = []
     @@stations_count += 1
   end
