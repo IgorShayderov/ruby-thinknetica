@@ -41,13 +41,14 @@ class Station
     @trains_inside.delete(train)
   end
 
+  def each_train
+    @trains_inside.each { |train| yield(train) }
+  end
+
   protected
 
   def validate!
     raise ArgumentError, "Wrong name for station." if !(name =~ PATTERN)
   end
 
-  def trains_action
-    @trains_inside.each { |train| yield(train) }
-  end
 end

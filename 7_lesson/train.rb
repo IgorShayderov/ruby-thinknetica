@@ -98,16 +98,16 @@ class Train
     end
   end
 
+  def each_carriage
+    @carriages.each { |carriage| yield(carriage) }
+  end
+
   protected
 # пользователь не должен по своему усмотрению менять скорость(хотя пока что это ни на что не влияет)
   attr_writer :speed
 # получение индекса это служебный метод, пользователю он как минимум не нужен
   def current_station_index
     @route.stations_list.index(@station)
-  end
-
-  def carriages_action
-    @carriages.each { |carriage| yield(carriage) }
   end
 
   def validate!

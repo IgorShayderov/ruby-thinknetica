@@ -1,19 +1,13 @@
 class PassengerCarriage < Carriage
 
-  attr_reader :occupied_seats, :seats_amount
-
-  def initialize(seat_amount)
-    @type = "passenger"
-    @seats_amount = seats_amount
-    @occupied_seats = 0
+  def initialize(capacity)
+    super("passenger", capacity)
   end
 
-  def occupy_seat
-    if @occupy_seat < @seat_amount
-      @occupied_seats += 1
-    else
-      puts "All seats are occupied."
-    end
+  def load
+    message = "All seats are occupied."
+    number_of_ocupied_seats = 1
+    super(number_of_ocupied_seats, message)
   end
 
 end

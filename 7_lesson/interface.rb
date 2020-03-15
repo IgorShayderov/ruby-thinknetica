@@ -270,9 +270,9 @@ class Interface
 
   def stations_info
     @stations.each do |key, station|
-      station.trains_action do |train|
+      station.each_train do |train|
         puts "Train number #{train.number}, type #{train.type}, carriages #{train.carriages.length}."
-        train.carriages_action do |carriage, num = 1|
+        train.each_carriage do |carriage, num = 1|
           num += 1
 
           if carriage.type == "cargo"
