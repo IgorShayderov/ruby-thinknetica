@@ -142,7 +142,7 @@ class Interface
       puts "Carriage #{name} has been created."
     end
   rescue ArgumentError => error
-    puts error.inspect
+    puts error.message
   end
 
   def add_station(input)

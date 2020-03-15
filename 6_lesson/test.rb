@@ -11,9 +11,6 @@ require_relative 'cargo_carriage'
 require_relative 'passenger_carriage'
 require_relative 'interface'
 
-require 'minitest/spec'
-require 'minitest/autorun'
-
 describe Route do
   before do
     station1 = Station.new("Moscow")
@@ -28,7 +25,7 @@ describe Route do
       @route.add_station(@station3)
     end
     it "should have station in intermediate_stations attribute." do
-      _(@route.intermediate_stations).must_include(@station3)
+      @route.intermediate_stations.must_include(@station3)
     end
   end
 
@@ -40,7 +37,7 @@ describe Route do
       @route.remove_station(@station3)
     end
     it "should remove station from intermediate_stations attribute." do
-      _(@route.intermediate_stations).must_be_empty
+      @route.intermediate_stations.must_be_empty
     end
   end
 
