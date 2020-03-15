@@ -78,7 +78,7 @@ class Interface
     puts " * Train have (number) and (type) arguments. Type can be cargo or passenger."
     puts " * Station have (name) argument."
     puts " * Route have (start_station) and (end_station) arguments."
-    puts " * Carriage have (type) argument and (seat_amount) or (capacity) depends of type."
+    puts " * Carriage have (type) argument and (capacity)."
     puts " * Arguments must be in parentheses."
     puts "-route add station -station    | Adding station to the route."
     puts "-route remove station -station | Removing station from the route."
