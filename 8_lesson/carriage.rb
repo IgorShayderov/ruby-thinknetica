@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Carriage
-include Manufacturer
+  include Manufacturer
 
   attr_reader :capacity
 
@@ -20,5 +22,4 @@ include Manufacturer
   def free_space
     @capacity - @used_capacity
   end
-
 end
