@@ -11,9 +11,7 @@ module TrainMethods
                                   train: train
                                 })
 
-    if @trains[train].carriages.include?(@carriages[carriage])
-      return puts "You already have #{carriage} carriage."
-    end
+    return puts "You already have #{carriage} carriage." if @trains[train].carriages.include?(@carriages[carriage])
 
     @trains[train].add_carriage(carriage)
   end
@@ -27,9 +25,7 @@ module TrainMethods
                                   carriage: carriage,
                                   train: train
                                 })
-    unless @@trains[train].carriages.include?(@carriages[carriage])
-      return puts "You don't have #{carriage} carriage."
-    end
+    return puts "You don't have #{carriage} carriage." unless @@trains[train].carriages.include?(@carriages[carriage])
 
     @trains[train].remove_carriage(carriage)
   end

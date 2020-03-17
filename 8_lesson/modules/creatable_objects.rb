@@ -38,10 +38,10 @@ module CreatableObjects
     carriage_type = arguments[0]
     carriage_load = arguments[1]
 
-    if train_type == 'cargo'
-      @trains[name] = CargoCarriage.new(train_number, carriage_load)
-    elsif train_type == 'passenger'
-      @trains[name] = PassengerCarriage.new(train_number, carriage_load)
+    if carriage_type == 'cargo'
+      @carriages[name] = CargoCarriage.new('cargo', carriage_load)
+    elsif carriage_type == 'passenger'
+      @carriages[name] = PassengerCarriage.new('passenger', carriage_load)
     else
       puts 'Wrong type of carriage. Must be cargo of passenger.'
       return false

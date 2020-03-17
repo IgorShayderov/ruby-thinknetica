@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/AbcSize
+
 class Interface
   include StationMethods
   include TrainMethods
@@ -102,3 +104,5 @@ class Interface
     puts 'exit                           | Exit from program.'
   end
 end
+
+# rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/AbcSize
