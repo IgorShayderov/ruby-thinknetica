@@ -10,7 +10,6 @@ module Validations
     attr_reader :validations
 
     def validate(attr, validation_type, *args)
-
       @validations ||= []
       validations << { attr: attr, validation_type: validation_type, args: args}
     end
@@ -21,19 +20,22 @@ module Validations
 
     def validate!
       self.class.instance_variable_get(:@validations).each do |validation|
-
-        case validation[:validation_type]
-        when :presence
-          raise TypeError.new("#{validation[:attr]} should not be empty.") unless !validation[:attr].nil?
-        when :format
-          raise TypeError.new("You should pass Regexp into params.") unless validation[:args][0].class == Regexp
-          raise TypeError.new("#{validation[:attr]} should corresponds to format.") unless validation[:args][0].match?validation[:attr]
-        when :type
-          attr_value = instance_variable_get("@#{validation[:attr]}")
-          raise TypeError.new("#{validation[:attr]} should corresponds to type.") unless attr_value.class == validation[:args][0]
-        end
+        send "validate_#{validation[:validation_type]}".to_sym, validation[:attr], validation[:args][0]
       end
-      puts "Validation compleated!"
+    end
+
+    def validate_presence(attribute, arg="useless")
+      raise TypeError.new("#{attribute} should not be empty.") unless !attribute.nil?
+    end
+
+    def validate_format(attribute, pattern)
+      raise TypeError.new("You should pass Regexp into params.") unless pattern.class == Regexp
+      raise TypeError.new("#{attribute} should corresponds to format.") unless pattern.match?attribute
+    end
+
+    def validate_type(attribute, type)
+      attr_value = self.instance_variable_get("@#{attribute}")
+      raise TypeError.new("#{attribute} should corresponds to type.") unless attr_value.class == type
     end
 
     def valid?
