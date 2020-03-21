@@ -1,4 +1,5 @@
 module Validations
+  include Validation
 
   def self.included(base)
     base.extend ClassMethods
