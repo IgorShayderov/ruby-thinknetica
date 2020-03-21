@@ -34,23 +34,3 @@ module Accessors
   end
 
 end
-
-class Car
-extend Accessors
-
-attr_accessor_with_history :mileage, :pedestrians_killed
-strong_attr_accessor :wheels, :class => Integer
-
-end
-
-bmw = Car.new
-bmw.mileage = 500
-bmw.pedestrians_killed = 1
-bmw.mileage = 600
-bmw.mileage = 800
-bmw.pedestrians_killed = 5
-
-p bmw.mileage_history
-p bmw.pedestrians_killed_history
-
-p bmw.wheels = 123
